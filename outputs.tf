@@ -1,3 +1,3 @@
-output "tfc_example_table_arn" {
-  value = aws_dynamodb_table.tfc_example_table.arn
+output "aws_instance_web_arn" {
+  value = aws_instance.web.arn
 }
