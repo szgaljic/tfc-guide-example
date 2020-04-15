@@ -6,7 +6,8 @@ provider "aws" {
 
 data "aws_ami" "ubuntu" {
   most_recent = true
-
+  owners = ["amazon", "aws-marketplace"]
+  
   filter {
     name   = "name"
     values = ["ubuntu/images/hvm-ssd/${var.ec2_ami}"]
