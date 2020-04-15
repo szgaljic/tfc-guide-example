@@ -4,17 +4,24 @@ provider "aws" {
   region = var.aws_region
 }
 
-resource "aws_dynamodb_table" "tfc_example_table" {
-  name = var.db_table_name
+data "aws_ami" "ubuntu" {
+  most_recent = true
 
-  read_capacity  = var.db_read_capacity
-  write_capacity = var.db_write_capacity
-  hash_key       = "UUID"
-
-  attribute {
-    name = "UUID"
-    type = "S"
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/${var.ec2_ami}"]
   }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  
+}
+
+resource "aws_instance" "web" {
+  ami           = "${data.aws_ami.ubuntu.id}"
+  instance_type = var.ec2_instance_type
 
   tags = {
     user_name = var.tag_user_name
